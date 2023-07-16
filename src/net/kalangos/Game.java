@@ -56,6 +56,53 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			}
 		}
 	}
+	
+	public int checkVictory(){
+		//verificar se o player ganhou na horizontal
+		
+		if(TABULEIRO[0][0] == PLAYER && TABULEIRO[1][0] == PLAYER && TABULEIRO[2][0] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		if(TABULEIRO[0][1] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[2][1] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		if(TABULEIRO[0][2] == PLAYER && TABULEIRO[1][2] == PLAYER && TABULEIRO[2][2] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		
+		//verificar se o player ganhou na vertical
+		
+		if(TABULEIRO[0][0] == PLAYER && TABULEIRO[0][1] == PLAYER && TABULEIRO[0][2] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		if(TABULEIRO[1][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[1][2] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		if(TABULEIRO[2][0] == PLAYER && TABULEIRO[2][1] == PLAYER && TABULEIRO[2][2] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		
+		//verificar se o player ganhou na diagonal
+		
+		if(TABULEIRO[0][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[2][2] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		if(TABULEIRO[2][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[0][2] == PLAYER) {
+			//player ganhou
+			return PLAYER;
+		}
+		
+		
+		//ninguém ganhou
+		return -10;
+	}
 
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -91,6 +138,10 @@ public class Game extends Canvas implements Runnable, MouseListener {
 					CURRENT = PLAYER;
 				}
 			}
+		}
+		if(checkVictory() == PLAYER) {
+			System.out.println("Player Ganhou");
+			System.exit(1);
 		}
 	}
 
