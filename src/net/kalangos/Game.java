@@ -7,7 +7,10 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable, KeyListener{
@@ -20,11 +23,25 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	public static final int HEIGHT = 300;
 	
 	public final int PLAYER = 1;
-	public final int OPPONENT = 2;
+	public final int OPPONENT = -1;
+	public final int CURRENT = PLAYER;
+	
+	public BufferedImage PLAYER_SPRITE;
+	public BufferedImage OPPONENT_SPRITE;
+	
+	public int[][] TABULEIRO = new int[3][3];
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
-	
+		this.addKeyListener(this);
+		TABULEIRO[0][0] = PLAYER;
+		try {
+			PLAYER_SPRITE = ImageIO.read(getClass().getResource("/player.png"));
+			OPPONENT_SPRITE = ImageIO.read(getClass().getResource("/opponent.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -41,7 +58,11 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	}
 	
 	public void tick() {
-		
+		if(CURRENT == PLAYER) {
+			
+		}else if (CURRENT == OPPONENT){
+			
+		}
 	}
 	
 	public void render() {
@@ -53,6 +74,18 @@ public class Game extends Canvas implements Runnable, KeyListener{
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.WHITE);
 		g.fillRect(0,0,WIDTH,HEIGHT);
+		
+		for(int xx = 0; xx < TABULEIRO.length; xx++) {
+			for(int yy = 0; yy < TABULEIRO.length; yy++) {
+				g.setColor(Color.black);
+				g.drawRect(xx*100, yy*100, 100, 100);
+				if(TABULEIRO[xx][yy] == PLAYER) {
+					g.drawImage(PLAYER_SPRITE, xx*100, yy*100, null);
+				}else if(TABULEIRO[xx][yy] == OPPONENT) {
+					g.drawImage(OPPONENT_SPRITE, xx*100, yy*100, null);
+				}
+			}
+		}
 		
 		g.dispose();
 		bs.show();
