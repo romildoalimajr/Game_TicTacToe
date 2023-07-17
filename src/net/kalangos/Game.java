@@ -56,51 +56,91 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			}
 		}
 	}
-	
-	public int checkVictory(){
-		//verificar se o player ganhou na horizontal
-		
-		if(TABULEIRO[0][0] == PLAYER && TABULEIRO[1][0] == PLAYER && TABULEIRO[2][0] == PLAYER) {
-			//player ganhou
+
+	public int checkVictory() {
+		// verificar se o player ganhou na horizontal
+
+		if (TABULEIRO[0][0] == PLAYER && TABULEIRO[1][0] == PLAYER && TABULEIRO[2][0] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		if(TABULEIRO[0][1] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[2][1] == PLAYER) {
-			//player ganhou
+		if (TABULEIRO[0][1] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[2][1] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		if(TABULEIRO[0][2] == PLAYER && TABULEIRO[1][2] == PLAYER && TABULEIRO[2][2] == PLAYER) {
-			//player ganhou
+		if (TABULEIRO[0][2] == PLAYER && TABULEIRO[1][2] == PLAYER && TABULEIRO[2][2] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		
-		//verificar se o player ganhou na vertical
-		
-		if(TABULEIRO[0][0] == PLAYER && TABULEIRO[0][1] == PLAYER && TABULEIRO[0][2] == PLAYER) {
-			//player ganhou
+
+		// verificar se o player ganhou na vertical
+
+		if (TABULEIRO[0][0] == PLAYER && TABULEIRO[0][1] == PLAYER && TABULEIRO[0][2] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		if(TABULEIRO[1][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[1][2] == PLAYER) {
-			//player ganhou
+		if (TABULEIRO[1][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[1][2] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		if(TABULEIRO[2][0] == PLAYER && TABULEIRO[2][1] == PLAYER && TABULEIRO[2][2] == PLAYER) {
-			//player ganhou
+		if (TABULEIRO[2][0] == PLAYER && TABULEIRO[2][1] == PLAYER && TABULEIRO[2][2] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		
-		//verificar se o player ganhou na diagonal
-		
-		if(TABULEIRO[0][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[2][2] == PLAYER) {
-			//player ganhou
+
+		// verificar se o player ganhou na diagonal
+
+		if (TABULEIRO[0][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[2][2] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		if(TABULEIRO[2][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[0][2] == PLAYER) {
-			//player ganhou
+		if (TABULEIRO[2][0] == PLAYER && TABULEIRO[1][1] == PLAYER && TABULEIRO[0][2] == PLAYER) {
+			// player ganhou
 			return PLAYER;
 		}
-		
-		
-		//ninguém ganhou
+
+		// verificar se o oponente ganhou na horizontal
+
+		if (TABULEIRO[0][0] == OPPONENT && TABULEIRO[1][0] == OPPONENT && TABULEIRO[2][0] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+		if (TABULEIRO[0][1] == OPPONENT && TABULEIRO[1][1] == OPPONENT && TABULEIRO[2][1] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+		if (TABULEIRO[0][2] == OPPONENT && TABULEIRO[1][2] == OPPONENT && TABULEIRO[2][2] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+
+		// verificar se o oponente ganhou na vertical
+
+		if (TABULEIRO[0][0] == OPPONENT && TABULEIRO[0][1] == OPPONENT && TABULEIRO[0][2] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+		if (TABULEIRO[1][0] == OPPONENT && TABULEIRO[1][1] == OPPONENT && TABULEIRO[1][2] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+		if (TABULEIRO[2][0] == OPPONENT && TABULEIRO[2][1] == OPPONENT && TABULEIRO[2][2] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+
+		// verificar se o oponente ganhou na diagonal
+
+		if (TABULEIRO[0][0] == OPPONENT && TABULEIRO[1][1] == OPPONENT && TABULEIRO[2][2] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+		if (TABULEIRO[2][0] == OPPONENT && TABULEIRO[1][1] == OPPONENT && TABULEIRO[0][2] == OPPONENT) {
+			// oponente ganhou
+			return OPPONENT;
+		}
+
+		// ninguém ganhou
 		return -10;
 	}
 
@@ -139,8 +179,11 @@ public class Game extends Canvas implements Runnable, MouseListener {
 				}
 			}
 		}
-		if(checkVictory() == PLAYER) {
+		if (checkVictory() == PLAYER) {
 			System.out.println("Player Ganhou");
+			System.exit(1);
+		}else if (checkVictory() == OPPONENT) {
+			System.out.println("Oponente Ganhou");
 			System.exit(1);
 		}
 	}
