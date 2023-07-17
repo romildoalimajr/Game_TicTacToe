@@ -141,17 +141,17 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		}
 
 		int curScore = 0;
-		
-		//EMPATE
-		for(int xx = 0; xx < TABULEIRO.length; xx++) {
-			for(int yy = 0; yy < TABULEIRO.length; yy++) {
-				if(TABULEIRO[xx][yy] != 0) {
+
+		// EMPATE
+		for (int xx = 0; xx < TABULEIRO.length; xx++) {
+			for (int yy = 0; yy < TABULEIRO.length; yy++) {
+				if (TABULEIRO[xx][yy] != 0) {
 					curScore++;
 				}
 			}
 		}
-		
-		if(curScore == TABULEIRO.length * TABULEIRO[0].length) {
+
+		if (curScore == TABULEIRO.length * TABULEIRO[0].length) {
 			return 0;
 		}
 		// ninguém ganhou
@@ -195,13 +195,13 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		}
 		if (checkVictory() == PLAYER) {
 			System.out.println("Player Ganhou");
-			System.exit(1);
-		}else if (checkVictory() == OPPONENT) {
+
+		} else if (checkVictory() == OPPONENT) {
 			System.out.println("Oponente Ganhou");
-			System.exit(1);
-		}else if(checkVictory() == 0) {
+
+		} else if (checkVictory() == 0) {
 			System.out.println("O jogo empatou!");
-			System.exit(1);
+
 		}
 	}
 
