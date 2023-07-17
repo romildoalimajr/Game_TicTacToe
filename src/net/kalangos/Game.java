@@ -4,12 +4,13 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -25,7 +26,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 
 	public final int PLAYER = 1;
 	public final int OPPONENT = -1;
-	public int CURRENT = PLAYER;
+	public int CURRENT = OPPONENT;
 
 	public BufferedImage PLAYER_SPRITE;
 	public BufferedImage OPPONENT_SPRITE;
@@ -183,15 +184,17 @@ public class Game extends Canvas implements Runnable, MouseListener {
 				}
 			}
 		} else if (CURRENT == OPPONENT) {
-			if (isPressed) {
-				isPressed = false;
-				mouseX /= 100;
-				mouseY /= 100;
-				if (TABULEIRO[mouseX][mouseY] == 0) {
-					TABULEIRO[mouseX][mouseY] = OPPONENT;
-					CURRENT = PLAYER;
+			for (int xx = 0; xx < TABULEIRO.length; xx++) {
+				for (int yy = 0; yy < TABULEIRO.length; yy++) {
+					if (TABULEIRO[xx][yy] == 0) {
+						Node bestMove = getBestMove(xx, yy, 0, OPPONENT);
+						TABULEIRO[bestMove.x][bestMove.y] = OPPONENT;
+						CURRENT = PLAYER;
+						return;
+					}
 				}
 			}
+
 		}
 		if (checkVictory() == PLAYER) {
 			System.out.println("Player Ganhou");
@@ -203,6 +206,52 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			System.out.println("O jogo empatou!");
 
 		}
+	}
+
+	public Node getBestMove(int x, int y, int depth, int turno) {
+		if (checkVictory() == PLAYER) {
+			return new Node(x, y, depth - 10, depth);
+		} else if (checkVictory() == OPPONENT) {
+			return new Node(x, y, 10 - depth, depth);
+		} else if (checkVictory() == 0) {
+			return new Node(x, y, 0, depth);
+		}
+
+		List<Node> nodes = new ArrayList<Node>();
+
+		for (int xx = 0; xx < TABULEIRO.length; xx++) {
+			for (int yy = 0; yy < TABULEIRO.length; yy++) {
+				if (TABULEIRO[xx][yy] == 0) {
+					Node node;
+					if (turno == PLAYER) {
+						TABULEIRO[xx][yy] = PLAYER;
+						node = getBestMove(xx, yy, depth + 1, OPPONENT);
+						TABULEIRO[xx][yy] = 0;
+					} else {
+						TABULEIRO[xx][yy] = OPPONENT;
+						node = getBestMove(xx, yy, depth + 1, PLAYER);
+						TABULEIRO[xx][yy] = 0;
+					}
+					nodes.add(node);
+				}
+			}
+		}
+
+		Node finalNode = nodes.get(0);
+		for (int i = 0; i < nodes.size(); i++) {
+			Node n = nodes.get(i);
+			if (turno == PLAYER) {
+				if (n.score > finalNode.score) {
+					finalNode = n;
+				}
+			} else {
+				if (n.score < finalNode.score) {
+					finalNode = n;
+				}
+			}
+		}
+		return finalNode;
+
 	}
 
 	public void render() {
